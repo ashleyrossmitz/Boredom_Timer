@@ -138,7 +138,7 @@ def timer():
     rate = user_input("Enter boredom difficulty (1-5): ", 1, 5)         
     clear_screen()  
            
-    print("Time:", dur, "seconds. Difficulty:", rate)  # Output current session statistics
+    print("Time:", format_seconds(dur), "seconds. Difficulty:", rate)  # Output current session statistics
     
     new_session = {
         "date": date,
