@@ -44,7 +44,7 @@ def format_seconds(total_seconds):
     
     hours = (days * 24) + (seconds // 3600)
     minutes = (seconds % 3600) // 60
-    remining_seconds = seconds % 60
+    remaining_seconds = seconds % 60
     
     ms_part = f".{microseconds // 10000:02d}" if microseconds else ""
     
@@ -54,8 +54,8 @@ def format_seconds(total_seconds):
         result.append(f"{hours} час.")
     if minutes > 0:
         result.append(f"{minutes} мин.")
-    if remining_seconds > 0 or microseconds > 0 or not result:
-        result.append(f"{remining_seconds}{ms_part} сек.")
+    if remaining_seconds > 0 or microseconds > 0 or not result:
+        result.append(f"{remaining_seconds}{ms_part} сек.")
         
     return " ".join(result)
         
@@ -75,7 +75,7 @@ def show_stats():
         is_empty = not file_data
         
         if is_empty == False:
-            print(f"{'ДАТА':^12} | {'ВРЕМЯ':^26} | {'СЛОЖНОСТЬ':^10}")
+            print(f"{'ДАТА':^16} | {'ВРЕМЯ':^26} | {'СЛОЖНОСТЬ':^10}")
             print("-" * 56)
             for session in file_data:
                 print(f"{session['date']:<12} |  {format_seconds(session['time']):>25} | {session['rate']:^10}") 
@@ -100,19 +100,19 @@ def show_stats():
                 
             best_match = min(results, key=lambda x: x['calc_value'])
                         
-            print(f"\nСреднее время: {round(total_time / len(file_data), 2)}"
+            print(f"\nСреднее время: {format_seconds(round(total_time / len(file_data), 2))}"
                   f"\nСамая частая оценка: {most_freq_rate}"
                   f"\nВсего сессий: {len(file_data)}"
                   f"\nЛучшая сессия(дата): {best_match['date']}")
         else:
-            print("Статистика отстутствует.")  
+            print("Статистика отсутствует.")  
             
         print(f"\n{'='*56}\n")
         print("1. Удалить статистику\n"
             "2. Назад\n")
         if user_input("Выберите действие (1-2): ", 1, 2) == 1:
             while True:
-                confirm = input("Вы уверены (y/n): ")
+                confirm = input("Вы уверены (y/n): ").strip().lower()
                 if confirm == "y":
                     del_stat(filename)
                     break
@@ -125,7 +125,7 @@ def show_stats():
         
     
 def timer():
-    date = datetime.date.today().strftime("%d.%m.%Y")
+    date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
     clear_screen() 
     
     input("Нажмите <Enter>, чтобы запустить таймер ...")
@@ -151,6 +151,8 @@ def timer():
     file_data = load_stats(filename)
     file_data.append(new_session)
     save_stats(filename, file_data)
+    
+    input("Нажмите Enter...")
             
 
 
