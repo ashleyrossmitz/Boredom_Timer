@@ -90,7 +90,7 @@ def show_stats():
                 rate_val = item['rate']
                 date_val = item['date']
                 
-                ratio_res = rate_val / time_val
+                ratio_res = rate_val / time_val if time_val > 0 else float('inf')
 
                 results.append({
                     'date': date_val,
