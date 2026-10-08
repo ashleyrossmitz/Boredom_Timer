@@ -1,0 +1,9 @@
+# Личные данные
+stats.json
+
+# Служебные файлы Python
+__pycache__/
+*.pyc
+
+# Настройки VS Code
+.vscode/
