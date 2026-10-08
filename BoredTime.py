@@ -17,8 +17,7 @@ def load_stats(filename):
     return []   
 
 def del_stat(filename):
-    with open(filename, 'w', encoding='utf-8') as f:
-        pass  
+    save_stats(filename, [])
 
 def save_stats(filename, data):
     with open(filename, "w", encoding="utf-8") as f:
