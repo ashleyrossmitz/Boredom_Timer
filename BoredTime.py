@@ -30,9 +30,9 @@ def user_input(req, a, b):
             if a <= user_choice <= b:
                 return user_choice
             else:
-                print(f"Ошибка ввода. Введите число от {a} до {b}. Попробуйте ещё раз.")
+                print(f"Input error. Enter a number from {a} to {b}. Try again.")
         except ValueError:
-            print("Ошибка. Вы ввели не целое число. Попробуйте ещё раз.")
+            print("Error. You entered a non-integer number. Try again.")
             
 def format_seconds(total_seconds):
     td = timedelta(seconds=total_seconds)
@@ -50,31 +50,31 @@ def format_seconds(total_seconds):
     result = []
     
     if hours > 0:
-        result.append(f"{hours} час.")
+        result.append(f"{hours} hour(s)")
     if minutes > 0:
-        result.append(f"{minutes} мин.")
+        result.append(f"{minutes} minutes")
     if remaining_seconds > 0 or microseconds > 0 or not result:
-        result.append(f"{remaining_seconds}{ms_part} сек.")
+        result.append(f"{remaining_seconds}{ms_part} seconds")
         
     return " ".join(result)
         
 def menu():
-    print(f"{'ТАЙМЕР СКУКИ':^36}")
+    print(f"{'BOREDOM TIMER':^36}")
     print(f"{'='*36}\n")
-    print("1. Запустить таймер\n"
-          "2. Статистика\n"
-          "3. Выход\n")
+    print("1. Start timer\n"
+          "2. Statistics\n"
+          "3. Exit\n")
 
 def show_stats():
     while True:
         clear_screen()
-        print("====================== СТАТИСТИКА ======================\n")
+        print("====================== STATISTICS ======================\n")
         
         file_data = load_stats(filename)
         is_empty = not file_data
         
         if is_empty == False:
-            print(f"{'ДАТА':^16} | {'ВРЕМЯ':^26} | {'СЛОЖНОСТЬ':^10}")
+            print(f"{'DATE':^16} | {'TIME':^26} | {'DIFFICULTY':^10}")
             print("-" * 56)
             for session in file_data:
                 print(f"{session['date']:<12} |  {format_seconds(session['time']):>25} | {session['rate']:^10}") 
@@ -99,26 +99,26 @@ def show_stats():
                 
             best_match = min(results, key=lambda x: x['calc_value'])
                         
-            print(f"\nСреднее время: {format_seconds(round(total_time / len(file_data), 2))}"
-                  f"\nСамая частая оценка: {most_freq_rate}"
-                  f"\nВсего сессий: {len(file_data)}"
-                  f"\nЛучшая сессия(дата): {best_match['date']}")
+            print(f"\nAverage time: {format_seconds(round(total_time / len(file_data), 2))}"
+                  f"\nMost frequent rating: {most_freq_rate}"
+                  f"\nTotal sessions: {len(file_data)}"
+                  f"\nBest session (date): {best_match['date']}")
         else:
-            print("Статистика отсутствует.")  
+            print("No statistics available.")  
             
         print(f"\n{'='*56}\n")
-        print("1. Удалить статистику\n"
-            "2. Назад\n")
-        if user_input("Выберите действие (1-2): ", 1, 2) == 1:
+        print("1. Delete statistics\n"
+              "2. Back\n")
+        if user_input("Select an action (1-2): ", 1, 2) == 1:
             while True:
-                confirm = input("Вы уверены (y/n): ").strip().lower()
+                confirm = input("Are you sure (y/n): ").strip().lower()
                 if confirm == "y":
                     del_stat(filename)
                     break
                 elif confirm == "n": 
                     break
                 else:
-                    print("Ошибка! Пожалуйста, введите только 'y' или 'n'.")
+                    print("Error! Please enter only 'y' or 'n'.")
         else:
             break
         
@@ -127,18 +127,18 @@ def timer():
     date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
     clear_screen() 
     
-    input("Нажмите <Enter>, чтобы запустить таймер ...")
+    input("Press <Enter> to start the timer ...")
     start = time.time()
     
-    input("Нажмите <Enter>, чтобы остановить таймер ...")
+    input("Press <Enter> to stop the timer ...")
     stop = time.time()  
        
     dur = round(stop - start, 2)
     
-    rate = user_input("Введите сложность скуки (1-5): ", 1, 5)         
+    rate = user_input("Enter boredom difficulty (1-5): ", 1, 5)         
     clear_screen()  
            
-    print("Время:", dur, "секунд. Сложность:", rate) # Вывод статистики текущей сессии
+    print("Time:", dur, "seconds. Difficulty:", rate)  # Output current session statistics
     
     new_session = {
         "date": date,
@@ -151,26 +151,26 @@ def timer():
     file_data.append(new_session)
     save_stats(filename, file_data)
     
-    input("Нажмите Enter...")
+    input("Press Enter...")
             
 
 
-# --------------- запуск ---------------
+# --------------- launch ---------------
 
 def main():
     while True:
         clear_screen()
         menu()
         
-        choice = user_input("Выберите действие (1-3): ", 1, 3)
+        choice = user_input("Select an action (1-3): ", 1, 3)
         
-        # Таймер скуки
+        # Boredom timer
         if choice == 1:  
             timer()
-        # Вывод статистики
+        # Statistics output
         elif choice == 2:
             show_stats()       
-        # Выход
+        # Exit
         elif choice == 3:
             break
             
