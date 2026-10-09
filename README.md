@@ -24,11 +24,11 @@ python BoredTime.py
 ## 📁 Project structure
 
 ```
-BoredTime/
-├── BoredTime.py     # main code
-├── stats.json       # session database (created automatically)
-├── .gitignore       # what not to push to Git
-└── README.md        # this file
+Boredom_Timer/
+├── Boredom_Timer.py     # main code
+├── stats.json           # session database (created automatically)
+├── .gitignore           # what not to push to Git
+└── README.md            # this file
 ```
 
 ## 🛠 Technologies
