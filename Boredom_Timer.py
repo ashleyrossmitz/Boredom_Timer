@@ -35,7 +35,7 @@ def user_input(req, a, b):
             
 def format_seconds(total_seconds):
     if total_seconds < 0:
-        return 0
+        return "0 seconds"
     else:
         td = timedelta(seconds=total_seconds)
         
