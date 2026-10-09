@@ -72,9 +72,8 @@ def show_stats():
         print("====================== STATISTICS ======================\n")
         
         file_data = load_stats(filename)
-        is_empty = not file_data
         
-        if is_empty == False:
+        if file_data:
             print(f"{'DATE':^16} | {'TIME':^26} | {'DIFFICULTY':^10}")
             print("-" * 56)
             for session in file_data:
