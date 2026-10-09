@@ -4,7 +4,7 @@ import os
 from collections import Counter
 from datetime import datetime, timedelta
 
-filename = "stats.json"
+STATS_FILE = "stats.json"
 
 def clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
@@ -68,12 +68,12 @@ def menu():
           "2. Statistics\n"
           "3. Exit\n")
 
-def show_stats():
+def show_stats(stats_file):
     while True:
         clear_screen()
         print("====================== STATISTICS ======================\n")
         
-        file_data = load_stats(filename)
+        file_data = load_stats(stats_file)
         
         if file_data:
             print(f"{'DATE':^16} | {'TIME':^26} | {'DIFFICULTY':^10}")
@@ -116,7 +116,7 @@ def show_stats():
             while True:
                 confirm = input("Are you sure (y/n): ").strip().lower()
                 if confirm == "y":
-                    del_stat(filename)
+                    del_stat(stats_file)
                     break
                 elif confirm == "n": 
                     break
@@ -126,7 +126,7 @@ def show_stats():
             break
         
     
-def timer():
+def timer(stats_file):
     date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
     clear_screen() 
     
@@ -150,9 +150,9 @@ def timer():
     }   
       
     # saving statistics to a file
-    file_data = load_stats(filename)
+    file_data = load_stats(stats_file)
     file_data.append(new_session)
-    save_stats(filename, file_data)
+    save_stats(stats_file, file_data)
     
     input("Press Enter...")
             
@@ -169,10 +169,10 @@ def main():
         
         # boredom timer
         if choice == 1:  
-            timer()
+            timer(STATS_FILE)
         # statistics output
         elif choice == 2:
-            show_stats()       
+            show_stats(STATS_FILE)  
         # exit
         elif choice == 3:
             break
