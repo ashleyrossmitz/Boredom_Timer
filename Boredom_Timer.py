@@ -35,29 +35,32 @@ def user_input(req, a, b):
             print("Error. You entered a non-integer number. Try again.")
             
 def format_seconds(total_seconds):
-    td = timedelta(seconds=total_seconds)
-    
-    days = td.days
-    seconds = td.seconds
-    microseconds = td.microseconds
-    
-    hours = (days * 24) + (seconds // 3600)
-    minutes = (seconds % 3600) // 60
-    remaining_seconds = seconds % 60
-    
-    # if there are microseconds, a tail with two decimal places is saved; if there are none, there will be no microseconds
-    ms_part = f".{microseconds // 10000:02d}" if microseconds else ""
-    
-    result = []
-    
-    if hours > 0:
-        result.append(f"{hours} hour(s)")
-    if minutes > 0:
-        result.append(f"{minutes} minutes")
-    if remaining_seconds > 0 or microseconds > 0 or not result:
-        result.append(f"{remaining_seconds}{ms_part} seconds")
+    if total_seconds < 0:
+        return 0
+    else:
+        td = timedelta(seconds=total_seconds)
         
-    return " ".join(result)
+        days = td.days
+        seconds = td.seconds
+        microseconds = td.microseconds
+        
+        hours = (days * 24) + (seconds // 3600)
+        minutes = (seconds % 3600) // 60
+        remaining_seconds = seconds % 60
+        
+        # if there are microseconds, a tail with two decimal places is saved; if there are none, there will be no microseconds
+        ms_part = f".{microseconds // 10000:02d}" if microseconds else ""
+        
+        result = []
+        
+        if hours > 0:
+            result.append(f"{hours} hour(s)")
+        if minutes > 0:
+            result.append(f"{minutes} minutes")
+        if remaining_seconds > 0 or microseconds > 0 or not result:
+            result.append(f"{remaining_seconds}{ms_part} seconds")
+            
+        return " ".join(result)
         
 def menu():
     print(f"{'BOREDOM TIMER':^36}")
