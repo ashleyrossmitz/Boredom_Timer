@@ -1,9 +1,8 @@
 import time
-import datetime
 import json
 import os
 from collections import Counter
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 filename = "stats.json"
 
