@@ -45,6 +45,7 @@ def format_seconds(total_seconds):
     minutes = (seconds % 3600) // 60
     remaining_seconds = seconds % 60
     
+    # if there are microseconds, a tail with two decimal places is saved; if there are none, there will be no microseconds
     ms_part = f".{microseconds // 10000:02d}" if microseconds else ""
     
     result = []
@@ -97,6 +98,7 @@ def show_stats():
                     'calc_value': ratio_res
                 })
                 
+            # the best one is the longest session with the lowest difficulty, the smallest rate / time ratio
             best_match = min(results, key=lambda x: x['calc_value'])
                         
             print(f"\nAverage time: {format_seconds(round(total_time / len(file_data), 2))}"
@@ -138,7 +140,7 @@ def timer():
     rate = user_input("Enter boredom difficulty (1-5): ", 1, 5)         
     clear_screen()  
            
-    print("Time:", format_seconds(round(dur, 2)), "seconds. Difficulty:", rate)  # Output current session statistics
+    print("Time:", format_seconds(round(dur, 2)), "seconds. Difficulty:", rate)  # output current session statistics
     
     new_session = {
         "date": date,
@@ -146,7 +148,7 @@ def timer():
         "rate": rate
     }   
       
-    # Сохранение статистики в файл
+    # saving statistics to a file
     file_data = load_stats(filename)
     file_data.append(new_session)
     save_stats(filename, file_data)
@@ -164,13 +166,13 @@ def main():
         
         choice = user_input("Select an action (1-3): ", 1, 3)
         
-        # Boredom timer
+        # boredom timer
         if choice == 1:  
             timer()
-        # Statistics output
+        # statistics output
         elif choice == 2:
             show_stats()       
-        # Exit
+        # exit
         elif choice == 3:
             break
             
