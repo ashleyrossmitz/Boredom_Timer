@@ -82,7 +82,7 @@ def show_stats():
                 
             total_time = sum(s["time"] for s in file_data)
             all_rates = [item["rate"] for item in file_data]
-            most_freq_rate, count_rate = Counter(all_rates).most_common(1)[0]
+            most_freq_rate, _ = Counter(all_rates).most_common(1)[0]
             
             results = []
             
