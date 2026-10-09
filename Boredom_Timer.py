@@ -127,7 +127,7 @@ def show_stats(stats_file):
         
     
 def timer(stats_file):
-    date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
+    date = datetime.now().strftime("%d.%m.%Y %H:%M")
     clear_screen() 
     
     input("Press <Enter> to start the timer ...")
