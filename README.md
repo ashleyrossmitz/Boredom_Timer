@@ -36,6 +36,6 @@ Python 3.10+
 
 Standard libraries: time, datetime, json, os, collections
 
-## 📄 Лицензия
+## 📄 License
 
 MIT
