@@ -15,12 +15,12 @@ def load_stats(filename):
            return json.load(f)
     return []   
 
-def del_stat(filename):
-    save_stats(filename, [])
-
 def save_stats(filename, data):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
+
+def del_stat(filename):
+    save_stats(filename, [])
         
 def user_input(req, a, b):
     while True:
