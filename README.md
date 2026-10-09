@@ -7,14 +7,14 @@
 > Boredom timer — counts how long you were bored and saves the statistics.
 
 ## 📖 About the project
-BoredTime is a console application that measures how much time
+Boredom timer is a console application that measures how much time
 you were bored and lets you rate the "boredom difficulty" on a scale of 1–5.
 The statistics are saved to JSON and available for viewing.
 
 ## Launch
 
 ```bash
-python BoredTime.py
+python Boredom_Timer.py
 ```
 
 ## Requirements
