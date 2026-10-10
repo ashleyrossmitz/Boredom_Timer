@@ -20,7 +20,7 @@ The statistics are saved to JSON and available for viewing.
 python Boredom_Timer.py
 ```
 
-🎮 Usage
+## 🎮 Usage
 1. Run the program.
 2. Select 1 to start the timer.
 3. Press Enter to start.
