@@ -38,6 +38,8 @@ def user_input(req, a, b):
         except EOFError:
             print("Input interrupted. Exiting.")
             return
+        except KeyboardInterrupt:
+            return
             
 def format_seconds(total_seconds):
     if total_seconds < 0:
