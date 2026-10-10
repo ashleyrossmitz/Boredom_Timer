@@ -3,6 +3,7 @@ import json
 import os
 from collections import Counter
 from datetime import datetime, timedelta
+import sys
 
 STATS_FILE = "stats.json"
 
@@ -25,22 +26,24 @@ def save_stats(filename, data):
 
 def del_stat(filename):
     save_stats(filename, [])
+    
+def safe_input(prompt=""):
+    try:
+        return input(prompt)
+    except (KeyboardInterrupt, EOFError):
+        print("\nExit.")
+        sys.exit(0)
         
 def user_input(req, a, b):
     while True:
         try:
-            user_choice = int(input(req))
+            user_choice = int(safe_input(req))
             if a <= user_choice <= b:
                 return user_choice
             else:
                 print(f"Input error. Enter a number from {a} to {b}. Try again.")
         except ValueError:
             print("Error. You entered a non-integer number. Try again.")
-        except EOFError:
-            print("Input interrupted. Exiting.")
-            return
-        except KeyboardInterrupt:
-            return
             
 def format_seconds(total_seconds):
     if total_seconds < 0:
@@ -89,7 +92,7 @@ def best_match_stats(file_data):
         
 def are_you_sure(fun, stats_file):
     while True:
-        confirm = input("Are you sure (y/n): ").strip().lower()
+        confirm = safe_input("Are you sure (y/n): ").strip().lower()
         if confirm == "y":
             fun(stats_file)
             break
@@ -143,10 +146,10 @@ def show_stats(stats_file):
 def timer(stats_file):
     clear_screen() 
     
-    input("Press <Enter> to start the timer ...")
+    safe_input("Press <Enter> to start the timer ...")
     start = time.perf_counter()
     
-    input("Press <Enter> to stop the timer ...")
+    safe_input("Press <Enter> to stop the timer ...")
     stop = time.perf_counter() 
     
     date = datetime.now().strftime("%d.%m.%Y %H:%M")
@@ -169,7 +172,7 @@ def timer(stats_file):
     file_data.append(new_session)
     save_stats(stats_file, file_data)
     
-    input("Press Enter...")
+    safe_input("Press Enter...")
             
 
 
