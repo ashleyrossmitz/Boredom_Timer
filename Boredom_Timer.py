@@ -78,6 +78,17 @@ def best_match_stats(file_data):
     # the best one is the longest session with the lowest difficulty, the smallest rate / time ratio
     return min(results, key=lambda x: x['calc_value'])
         
+def are_you_sure(fun, stats_file):
+    while True:
+        confirm = input("Are you sure (y/n): ").strip().lower()
+        if confirm == "y":
+            fun(stats_file)
+            break
+        elif confirm == "n": 
+            break
+        else:
+            print("Error! Please enter only 'y' or 'n'.")
+        
 def menu():
     print(f"{'BOREDOM TIMER':^36}")
     print(f"{'='*36}\n")
@@ -115,17 +126,7 @@ def show_stats(stats_file):
         print("1. Delete statistics\n"
               "2. Back\n")
         if user_input("Select an action (1-2): ", 1, 2) == 1:
-            
-            # function
-            while True:
-                confirm = input("Are you sure (y/n): ").strip().lower()
-                if confirm == "y":
-                    del_stat(stats_file)
-                    break
-                elif confirm == "n": 
-                    break
-                else:
-                    print("Error! Please enter only 'y' or 'n'.")
+            are_you_sure(del_stat, stats_file)
         else:
             break
         
