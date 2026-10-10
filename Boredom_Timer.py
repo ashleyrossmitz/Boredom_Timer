@@ -61,6 +61,23 @@ def format_seconds(total_seconds):
             
         return " ".join(result)
         
+def best_match_stats(file_data):
+    results = []
+    for item in file_data:
+        time_val = item['time']
+        rate_val = item['rate']
+        date_val = item['date']
+                    
+        ratio_res = rate_val / time_val if time_val > 0 else float('inf')
+    
+        results.append({
+            'date': date_val,
+            'calc_value': ratio_res
+        })
+                    
+    # the best one is the longest session with the lowest difficulty, the smallest rate / time ratio
+    return min(results, key=lambda x: x['calc_value'])
+        
 def menu():
     print(f"{'BOREDOM TIMER':^36}")
     print(f"{'='*36}\n")
@@ -85,22 +102,7 @@ def show_stats(stats_file):
             all_rates = [item["rate"] for item in file_data]
             most_freq_rate, _ = Counter(all_rates).most_common(1)[0]
             
-            results = []
-            
-            for item in file_data:
-                time_val = item['time']
-                rate_val = item['rate']
-                date_val = item['date']
-                
-                ratio_res = rate_val / time_val if time_val > 0 else float('inf')
-
-                results.append({
-                    'date': date_val,
-                    'calc_value': ratio_res
-                })
-                
-            # the best one is the longest session with the lowest difficulty, the smallest rate / time ratio
-            best_match = min(results, key=lambda x: x['calc_value'])
+            best_match = best_match_stats(file_data)
                         
             print(f"\nAverage time: {format_seconds(round(total_time / len(file_data), 2))}"
                   f"\nMost frequent rating: {most_freq_rate}"
@@ -113,6 +115,8 @@ def show_stats(stats_file):
         print("1. Delete statistics\n"
               "2. Back\n")
         if user_input("Select an action (1-2): ", 1, 2) == 1:
+            
+            # function
             while True:
                 confirm = input("Are you sure (y/n): ").strip().lower()
                 if confirm == "y":
