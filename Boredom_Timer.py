@@ -107,7 +107,7 @@ def show_stats(stats_file):
             print(f"{'DATE':^16} | {'TIME':^26} | {'DIFFICULTY':^10}")
             print("-" * 56)
             for session in file_data:
-                print(f"{session['date']:<12} |  {format_seconds(session['time']):>25} | {session['rate']:^10}") 
+                print(f"{session['date']:<16} |  {format_seconds(session['time']):>25} | {session['rate']:^10}") 
                 
             total_time = sum(s["time"] for s in file_data)
             all_rates = [item["rate"] for item in file_data]
