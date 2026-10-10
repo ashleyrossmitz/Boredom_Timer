@@ -12,8 +12,11 @@ def clear_screen():
 def load_stats(filename):
     if os.path.exists(filename) and os.path.getsize(filename) > 0:
         with open(filename, "r", encoding="utf-8") as f:
-           return json.load(f)
-    return []   
+            try: 
+                return json.load(f)
+            except json.JSONDecodeError:
+                print("file is corrupted")
+                return []
 
 def save_stats(filename, data):
     with open(filename, "w", encoding="utf-8") as f:
