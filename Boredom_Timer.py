@@ -135,10 +135,10 @@ def timer(stats_file):
     clear_screen() 
     
     input("Press <Enter> to start the timer ...")
-    start = time.time()
+    start = time.perf_counter()
     
     input("Press <Enter> to stop the timer ...")
-    stop = time.time()  
+    stop = time.perf_counter() 
     
     date = datetime.now().strftime("%d.%m.%Y %H:%M")
        
