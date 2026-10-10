@@ -17,6 +17,7 @@ def load_stats(filename):
             except json.JSONDecodeError:
                 print("file is corrupted")
                 return []
+    return []
 
 def save_stats(filename, data):
     with open(filename, "w", encoding="utf-8") as f:
