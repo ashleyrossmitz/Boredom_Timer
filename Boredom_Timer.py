@@ -35,6 +35,9 @@ def user_input(req, a, b):
                 print(f"Input error. Enter a number from {a} to {b}. Try again.")
         except ValueError:
             print("Error. You entered a non-integer number. Try again.")
+        except EOFError:
+            print("Input interrupted. Exiting.")
+            return
             
 def format_seconds(total_seconds):
     if total_seconds < 0:
