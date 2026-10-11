@@ -24,7 +24,7 @@ def save_stats(filename, data):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-def del_stat(filename):
+def clear_stats(filename):
     save_stats(filename, [])
     
 def safe_input(prompt=""):
@@ -73,7 +73,7 @@ def format_seconds(total_seconds):
             
         return " ".join(result)
         
-def best_match_stats(file_data):
+def best_session(file_data):
     results = []
     for item in file_data:
         time_val = item['time']
@@ -90,7 +90,7 @@ def best_match_stats(file_data):
     # the best one is the longest session with the lowest difficulty, the smallest rate / time ratio
     return min(results, key=lambda x: x['calc_value'])
         
-def are_you_sure(fun, stats_file):
+def confirm_action(fun, stats_file):
     while True:
         confirm = safe_input("Are you sure (y/n): ").strip().lower()
         if confirm == "y":
@@ -125,7 +125,7 @@ def show_stats(stats_file):
             all_rates = [item["rate"] for item in file_data]
             most_freq_rate, _ = Counter(all_rates).most_common(1)[0]
             
-            best_match = best_match_stats(file_data)
+            best_match = best_session(file_data)
                         
             print(f"\nAverage time: {format_seconds(round(total_time / len(file_data), 2))}"
                   f"\nMost frequent rating: {most_freq_rate}"
@@ -138,7 +138,7 @@ def show_stats(stats_file):
         print("1. Delete statistics\n"
               "2. Back\n")
         if user_input("Select an action (1-2): ", 1, 2) == 1:
-            are_you_sure(del_stat, stats_file)
+            confirm_action(clear_stats, stats_file)
         else:
             break
         
