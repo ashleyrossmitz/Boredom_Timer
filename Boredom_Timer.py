@@ -1,3 +1,28 @@
+"""
+Boredom Timer — a console timer that measures how long you were bored.
+
+Features:
+- measures time between two Enter presses;
+- asks for a boredom rating from 1 to 5;
+- saves each session to a JSON file;
+- shows statistics for all sessions.
+
+stats.json format:
+[
+    {
+        "date": "01.01.2025 12:34",
+        "time": 12.345,
+        "rate": 3
+    },
+    ...
+]
+
+Fields:
+    date — date and time when the session ended;
+    time — session duration in seconds (float);
+    rate — boredom rating from 1 to 5.
+"""
+
 import time
 import json
 import os
@@ -5,6 +30,7 @@ from collections import Counter
 from datetime import datetime, timedelta
 import sys
 
+# File where the session statistics are stored.
 STATS_FILE = "stats.json"
 
 def clear_screen():
@@ -55,6 +81,7 @@ def format_seconds(total_seconds):
         seconds = td.seconds
         microseconds = td.microseconds
         
+        # timedelta stores days separately, so convert them to hours.
         hours = (days * 24) + (seconds // 3600)
         minutes = (seconds % 3600) // 60
         remaining_seconds = seconds % 60
@@ -68,6 +95,8 @@ def format_seconds(total_seconds):
             result.append(f"{hours} hour(s)")
         if minutes > 0:
             result.append(f"{minutes} minutes")
+        # Show seconds if they are the only part
+        # or if there is a fractional part.
         if remaining_seconds > 0 or microseconds > 0 or not result:
             result.append(f"{remaining_seconds}{ms_part} seconds")
             
@@ -119,7 +148,11 @@ def show_stats(stats_file):
                 
             total_time = sum(s["time"] for s in file_data)
             all_rates = [item["rate"] for item in file_data]
+            
+            # most_common(1) returns a list with one tuple:
+            # [(most_common_rate, count), ...]
             most_freq_rate, _ = Counter(all_rates).most_common(1)[0]
+            
             best_session_time = best_session(file_data)
                         
             print(f"\nMaximum time: {format_seconds(best_session_time['time_value'])}"
@@ -147,13 +180,15 @@ def timer(stats_file):
     
     safe_input("Press <Enter> to stop the timer ...")
     stop = time.perf_counter()
-       
+    
+    # perf_counter() is suitable for measuring time intervals.
     dur = stop - start
     
     rate = user_input("Enter boredom difficulty (1-5): ", 1, 5)
     date = datetime.now().strftime("%d.%m.%Y %H:%M")        
     clear_screen()
-           
+    
+    # Show current session statistics.
     print("Time:", format_seconds(round(dur, 2)), "\nDifficulty:", rate)  # output current session statistics
     
     new_session = {
