@@ -77,18 +77,14 @@ def best_session(file_data):
     results = []
     for item in file_data:
         time_val = item['time']
-        rate_val = item['rate']
         date_val = item['date']
-                    
-        ratio_res = rate_val / time_val if time_val > 0 else float('inf')
     
         results.append({
             'date': date_val,
-            'calc_value': ratio_res
+            'time_value': time_val
         })
-                    
-    # the best one is the longest session with the lowest difficulty, the smallest rate / time ratio
-    return min(results, key=lambda x: x['calc_value'])
+        
+    return max(results, key=lambda x: x['time_value'])
         
 def confirm_action(fun, stats_file):
     while True:
@@ -124,13 +120,12 @@ def show_stats(stats_file):
             total_time = sum(s["time"] for s in file_data)
             all_rates = [item["rate"] for item in file_data]
             most_freq_rate, _ = Counter(all_rates).most_common(1)[0]
-            
-            best_match = best_session(file_data)
+            best_session_time = best_session(file_data)
                         
             print(f"\nAverage time: {format_seconds(round(total_time / len(file_data), 2))}"
                   f"\nMost frequent rating: {most_freq_rate}"
                   f"\nTotal sessions: {len(file_data)}"
-                  f"\nBest session (date): {best_match['date']}")
+                  f"\nBest session by time (date): {best_session_time['date']}")
         else:
             print("No statistics available.")  
             
