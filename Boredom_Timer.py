@@ -122,7 +122,8 @@ def show_stats(stats_file):
             most_freq_rate, _ = Counter(all_rates).most_common(1)[0]
             best_session_time = best_session(file_data)
                         
-            print(f"\nAverage time: {format_seconds(round(total_time / len(file_data), 2))}"
+            print(f"\nMaximum time: {format_seconds(best_session_time['time_value'])}"
+                  f"\nAverage time: {format_seconds(total_time / len(file_data))}"
                   f"\nMost frequent rating: {most_freq_rate}"
                   f"\nTotal sessions: {len(file_data)}"
                   f"\nBest session by time (date): {best_session_time['date']}")
