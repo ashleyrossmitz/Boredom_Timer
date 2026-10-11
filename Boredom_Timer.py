@@ -146,14 +146,13 @@ def timer(stats_file):
     start = time.perf_counter()
     
     safe_input("Press <Enter> to stop the timer ...")
-    stop = time.perf_counter() 
-    
-    date = datetime.now().strftime("%d.%m.%Y %H:%M")
+    stop = time.perf_counter()
        
     dur = stop - start
     
-    rate = user_input("Enter boredom difficulty (1-5): ", 1, 5)         
-    clear_screen()  
+    rate = user_input("Enter boredom difficulty (1-5): ", 1, 5)
+    date = datetime.now().strftime("%d.%m.%Y %H:%M")        
+    clear_screen()
            
     print("Time:", format_seconds(round(dur, 2)), "\nDifficulty:", rate)  # output current session statistics
     
